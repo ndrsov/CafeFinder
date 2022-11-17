@@ -1,6 +1,18 @@
 const express = require("express");
-const app = express();
 const path = require("path");
+const mongoose = require("mongoose");
+
+mongoose
+  .connect("mongodb://localhost:27017/cafe-finder")
+  .then(() => {
+    console.log("Connection with Mongo open");
+  })
+  .catch((err) => {
+    console.log("There was an error with Mongo");
+    console.log(err);
+  });
+
+const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
