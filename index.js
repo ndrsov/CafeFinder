@@ -22,15 +22,6 @@ app.get("/", (req, res) => {
   res.send("Hello from CafeFinder");
 });
 
-app.get("/makeshop", async (req, res) => {
-  const shop = new Coffeeshop({
-    title: "The bean bag",
-    description: "The hottest new coffe shop in town",
-  });
-  await shop.save();
-  res.send(shop);
-});
-
 app.listen(3000, () => {
   console.log("Serving on port 3000");
 });
