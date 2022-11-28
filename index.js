@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 
 app.get("/coffeeshops", async (req, res) => {
   const coffeeshops = await Coffeeshop.find({});
-  res.render("coffeeshops/index");
+  res.render("coffeeshops/index", { coffeeshops });
 });
 
 app.listen(3000, () => {

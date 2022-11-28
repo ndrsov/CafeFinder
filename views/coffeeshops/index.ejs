@@ -8,5 +8,10 @@
   </head>
   <body>
     <h1>All Coffeeshops</h1>
+    <ul>
+      <% for( let cafe of coffeeshops) { %>
+      <li><%= cafe.title %></li>
+      <% } %>
+    </ul>
   </body>
 </html>
