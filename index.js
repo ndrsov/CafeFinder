@@ -19,7 +19,12 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
-  res.send("Hello from CafeFinder");
+  res.render("home");
+});
+
+app.get("/coffeeshops", async (req, res) => {
+  const coffeeshops = await Coffeeshop.find({});
+  res.render("coffeeshops/index");
 });
 
 app.listen(3000, () => {
