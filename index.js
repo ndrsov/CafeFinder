@@ -32,6 +32,10 @@ app.get("/coffeeshops/:id", async (req, res) => {
   res.render("coffeeshops/show", { cafe });
 });
 
+app.get("/coffeeshops/new", (req, res) => {
+  res.render("coffeeshops/new");
+});
+
 app.listen(3000, () => {
   console.log("Serving on port 3000");
 });
