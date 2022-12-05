@@ -27,13 +27,13 @@ app.get("/coffeeshops", async (req, res) => {
   res.render("coffeeshops/index", { cafes });
 });
 
+app.get("/coffeeshops/new", (req, res) => {
+  res.render("coffeeshops/new");
+});
+
 app.get("/coffeeshops/:id", async (req, res) => {
   const cafe = await Coffeeshop.findById(req.params.id);
   res.render("coffeeshops/show", { cafe });
-});
-
-app.get("/coffeeshops/new", (req, res) => {
-  res.render("coffeeshops/new");
 });
 
 app.listen(3000, () => {
