@@ -28,7 +28,8 @@ app.get("/coffeeshops", async (req, res) => {
 });
 
 app.get("/coffeeshops/:id", async (req, res) => {
-  res.render("coffeeshops/show");
+  const cafe = await Coffeeshop.findById(req.params.id);
+  res.render("coffeeshops/show", { cafe });
 });
 
 app.listen(3000, () => {
