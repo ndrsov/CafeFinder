@@ -27,7 +27,7 @@ app.get("/coffeeshops", async (req, res) => {
   res.render("coffeeshops/index", { coffeeshops });
 });
 
-app.get("/coffeshops/:id", async (req, res) => {
+app.get("/coffeeshops/:id", async (req, res) => {
   res.render("coffeeshops/show");
 });
 
