@@ -8,6 +8,9 @@
   </head>
   <body>
     <h1>All Coffeeshops</h1>
+    <div>
+      <a href="/coffeeshops/new">Add a new coffeeshop</a>
+    </div>
     <ul>
       <% for( let cafe of cafes) { %>
       <li><a href="/coffeeshops/<%= cafe._id %>"><%= cafe.title %></a></li>
