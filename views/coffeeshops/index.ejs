@@ -10,7 +10,7 @@
     <h1>All Coffeeshops</h1>
     <ul>
       <% for( let cafe of coffeeshops) { %>
-      <li><%= cafe.title %></li>
+      <li><a href="/coffeshops/<%= cafe._id %>"><%= cafe.title %></a></li>
       <% } %>
     </ul>
   </body>
