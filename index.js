@@ -23,8 +23,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/coffeeshops", async (req, res) => {
-  const coffeeshops = await Coffeeshop.find({});
-  res.render("coffeeshops/index", { coffeeshops });
+  const cafes = await Coffeeshop.find({});
+  res.render("coffeeshops/index", { cafes });
 });
 
 app.get("/coffeeshops/:id", async (req, res) => {
