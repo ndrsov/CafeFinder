@@ -59,6 +59,12 @@ app.put("/coffeeshops/:id", async (req, res) => {
   res.redirect(`/coffeeshops/${cafe._id}`);
 });
 
+app.delete("/coffeeshops/:id", async (req, res) => {
+  const { id } = req.params;
+  const cafe = await Coffeeshop.findByIdAndDelete(id);
+  res.redirect("/coffeeshops");
+});
+
 app.listen(3000, () => {
   console.log("Serving on port 3000");
 });
