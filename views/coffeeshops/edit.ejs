@@ -11,13 +11,23 @@
     <form action="/coffeeshops" method="post">
       <div>
         <label for="title">Title</label>
-        <input type="text" id="title" name="cafe[title]" />
+        <input
+          type="text"
+          id="title"
+          name="cafe[title]"
+          value="<%= cafe.title %>"
+        />
       </div>
       <div>
         <label for="location">Location</label>
-        <input type="text" id="location" name="cafe[location]" />
+        <input
+          type="text"
+          id="location"
+          name="cafe[location]"
+          value="<%= cafe.location %>"
+        />
       </div>
-      <button>Add new coffeeshop</button>
+      <button>Update coffeeshop</button>
     </form>
     <footer>
       <a href="/coffeeshops/<%= cafe._id %> ">Go back</a>
