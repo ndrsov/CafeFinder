@@ -51,6 +51,14 @@ app.get("/coffeeshops/:id/edit", async (req, res) => {
   res.render("coffeeshops/edit", { cafe });
 });
 
+app.put("/coffeeshops/:id", async (req, res) => {
+  const { id } = req.params;
+  const cafe = await Coffeeshop.findByIdAndUpdate(id, {
+    ...req.body.cafe,
+  });
+  res.redirect(`/coffeeshops/${cafe._id}`);
+});
+
 app.listen(3000, () => {
   console.log("Serving on port 3000");
 });
