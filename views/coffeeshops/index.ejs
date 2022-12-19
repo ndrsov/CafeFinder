@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coffeeshops</title>
-  </head>
-  <body>
-    <h1>All Coffeeshops</h1>
-    <div>
-      <a href="/coffeeshops/new">Add a new coffeeshop</a>
-    </div>
-    <ul>
-      <% for( let cafe of cafes) { %>
-      <li><a href="/coffeeshops/<%= cafe._id %>"><%= cafe.title %></a></li>
-      <% } %>
-    </ul>
-  </body>
-</html>
+<% layout("layouts/boilerplate")%>
+<h1>All Coffeeshops</h1>
+<div>
+  <a href="/coffeeshops/new">Add a new coffeeshop</a>
+</div>
+<ul>
+  <% for( let cafe of cafes) { %>
+  <li><a href="/coffeeshops/<%= cafe._id %>"><%= cafe.title %></a></li>
+  <% } %>
+</ul>
