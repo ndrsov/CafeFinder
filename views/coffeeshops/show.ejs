@@ -1,6 +1,8 @@
 <% layout("layouts/boilerplate")%>
 <h1><%=cafe.title %></h1>
 <h2><%=cafe.location %></h2>
+<img src="<%= cafe.image %> " alt="" />
+<p><%= cafe.description %></p>
 <a href="/coffeeshops/<%=cafe._id %>/edit">Edit</a>
 <form action="/coffeeshops/<%= cafe._id %>?_method=DELETE" method="post">
   <button>Delete coffeeshop</button>
