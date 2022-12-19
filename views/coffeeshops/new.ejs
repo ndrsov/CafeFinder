@@ -1,16 +1,54 @@
 <% layout("layouts/boilerplate")%>
-<h1>Create a new coffeeshop</h1>
-<form action="/coffeeshops" method="post">
-  <div>
-    <label for="title">Title</label>
-    <input type="text" id="title" name="cafe[title]" />
+<div class="row">
+  <h1 class="text-center">Add a new café</h1>
+  <div class="col-6 offset-3">
+    <form action="/coffeeshops" method="post">
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input class="form-control" type="text" id="title" name="cafe[title]" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="location">Location</label>
+        <input
+          class="form-control"
+          type="text"
+          id="location"
+          name="cafe[location]"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="image" class="form-label">Add an image URL</label>
+        <input type="text" class="form-control" id="image" name="cafe[image]" />
+      </div>
+      <div class="mb-3">
+        <label for="avgprice" class="form-label"
+          >Average cup of coffee price:</label
+        >
+        <div class="input-group">
+          <span class="input-group-text" id="price-label">$</span>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="0.00"
+            aria-label="avgprice"
+            aria-describedby="price-label"
+            name="cafe[avgprice]"
+            id="avgprice"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Describe this place</label>
+        <textarea
+          class="form-control"
+          id="description"
+          name="cafe[description]"
+        ></textarea>
+      </div>
+      <div class="mb-3">
+        <button class="btn btn-success">Add new coffeeshop</button>
+      </div>
+    </form>
+    <a href="/coffeeshops">Go back</a>
   </div>
-  <div>
-    <label for="location">Location</label>
-    <input type="text" id="location" name="cafe[location]" />
-  </div>
-  <button>Add new coffeeshop</button>
-</form>
-<footer>
-  <a href="/coffeeshops">Go back</a>
-</footer>
+</div>
