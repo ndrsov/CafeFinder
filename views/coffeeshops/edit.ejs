@@ -2,7 +2,12 @@
 <div class="row">
   <h1 class="text-center">Edit café</h1>
   <div class="col-6 offset-3">
-    <form action="/coffeeshops/<%=cafe._id%>?_method=PUT" method="post">
+    <form
+      action="/coffeeshops/<%=cafe._id%>?_method=PUT"
+      method="post"
+      novalidate
+      class="validated-form"
+    >
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <input
@@ -11,7 +16,9 @@
           id="title"
           name="cafe[title]"
           value="<%= cafe.title %>"
+          required
         />
+        <div class="invalid-feedback">You can't leave this space blank</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="location">Location</label>
@@ -21,7 +28,9 @@
           id="location"
           name="cafe[location]"
           value="<%= cafe.location %>"
+          required
         />
+        <div class="invalid-feedback">You can't leave this space blank</div>
       </div>
       <div class="mb-3">
         <label for="image" class="form-label">Add an image URL</label>
@@ -31,7 +40,9 @@
           id="image"
           name="cafe[image]"
           value="<%= cafe.image %>"
+          required
         />
+        <div class="invalid-feedback">You can't leave this space blank</div>
       </div>
       <div class="mb-3">
         <label for="avgprice" class="form-label"
@@ -48,7 +59,9 @@
             name="cafe[avgprice]"
             id="avgprice"
             value="<%= cafe.avgprice %>"
+            required
           />
+          <div class="invalid-feedback">You can't leave this space blank</div>
         </div>
       </div>
       <div class="mb-3">
@@ -57,9 +70,11 @@
           class="form-control"
           id="description"
           name="cafe[description]"
+          required
         >
 <%= cafe.description %></textarea
         >
+        <div class="invalid-feedback">You can't leave this space blank</div>
       </div>
       <div class="mb-3">
         <button class="btn btn-info">Save changes</button>
