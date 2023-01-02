@@ -3,6 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const catchAsync = require("./utilities/catchAsync");
+const ExpressError = require("./utilities/ExpressError");
 const methodOverride = require("method-override");
 const Coffeeshop = require("./models/coffeeshop");
 
@@ -44,6 +45,7 @@ app.get("/coffeeshops/new", (req, res) => {
 app.post(
   "/coffeeshops",
   catchAsync(async (req, res, next) => {
+    if (!req.body.cafe) throw new ExpressError("Invalid coffeeshop data", 400);
     const cafe = new Coffeeshop(req.body.cafe);
     await cafe.save();
     res.redirect(`/coffeeshops/${cafe._id}`);
@@ -86,8 +88,13 @@ app.delete(
   })
 );
 
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page Not Found", 404));
+});
+
 app.use((err, req, res, next) => {
-  res.send("Something went wrong");
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).send(message);
 });
 
 app.listen(3000, () => {
