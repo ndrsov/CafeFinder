@@ -37,10 +37,14 @@ app.get("/coffeeshops/new", (req, res) => {
   res.render("coffeeshops/new");
 });
 
-app.post("/coffeeshops", async (req, res) => {
-  const cafe = new Coffeeshop(req.body.cafe);
-  await cafe.save();
-  res.redirect(`/coffeeshops/${cafe._id}`);
+app.post("/coffeeshops", async (req, res, next) => {
+  try {
+    const cafe = new Coffeeshop(req.body.cafe);
+    await cafe.save();
+    res.redirect(`/coffeeshops/${cafe._id}`);
+  } catch (e) {
+    next(e);
+  }
 });
 
 app.get("/coffeeshops/:id", async (req, res) => {
@@ -65,6 +69,10 @@ app.delete("/coffeeshops/:id", async (req, res) => {
   const { id } = req.params;
   const cafe = await Coffeeshop.findByIdAndDelete(id);
   res.redirect("/coffeeshops");
+});
+
+app.use((err, req, res, next) => {
+  res.send("Something went wrong");
 });
 
 app.listen(3000, () => {
