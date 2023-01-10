@@ -7,7 +7,10 @@
     <div class="h-100 p-5 bg-light border rounded-3">
       <h1><%=cafe.title %></h1>
       <p><%= cafe.description %></p>
-      <p class="text=muted"><%=cafe.location %></p>
+      <p><strong><%=cafe.location %></strong></p>
+      <p class="text-muted">
+        Average coffee price: <em>$<%= cafe.avgprice %>/cup</em>
+      </p>
       <a
         class="btn btn-outline-warning d-inline"
         href="/coffeeshops/<%=cafe._id %>/edit"
