@@ -7,6 +7,7 @@ const catchAsync = require("./utilities/catchAsync");
 const ExpressError = require("./utilities/ExpressError");
 const methodOverride = require("method-override");
 const Coffeeshop = require("./models/coffeeshop");
+const Review = require("./models/review");
 
 mongoose
   .connect("mongodb://localhost:27017/cafe-finder")
@@ -98,6 +99,18 @@ app.delete(
     const { id } = req.params;
     const cafe = await Coffeeshop.findByIdAndDelete(id);
     res.redirect("/coffeeshops");
+  })
+);
+
+app.post(
+  "/coffeeshops/:id/reviews",
+  catchAsync(async (req, res) => {
+    const cafe = await Coffeeshop.findById(req.params.id);
+    const review = new Review(req.body.review);
+    cafe.reviews.push(review);
+    await review.save();
+    await cafe.save();
+    res.redirect(`/coffeeshops/${cafe._id}`);
   })
 );
 
