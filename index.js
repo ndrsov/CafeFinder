@@ -78,7 +78,7 @@ app.post(
 app.get(
   "/coffeeshops/:id",
   catchAsync(async (req, res) => {
-    const cafe = await Coffeeshop.findById(req.params.id);
+    const cafe = await Coffeeshop.findById(req.params.id).populate("reviews");
     res.render("coffeeshops/show", { cafe });
   })
 );
