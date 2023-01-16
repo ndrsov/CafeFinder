@@ -37,6 +37,12 @@
       <h5 class="card-title">User says:</h5>
       <p class="text-center text-muted"><%= review.rating %>/5 stars</p>
       <p class="card-text"><%= review.body %></p>
+      <form
+        action="/coffeeshops/<%= cafe._id %>/reviews/<%= review._id %>?_method=DELETE"
+        method="post"
+      >
+        <button class="btn btn-sm btn-danger">Delete</button>
+      </form>
     </div>
   </div>
   <% } %>
