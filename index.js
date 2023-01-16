@@ -113,7 +113,6 @@ app.delete(
 );
 
 //Add review route
-
 app.post(
   "/coffeeshops/:id/reviews",
   validateReview,
@@ -124,6 +123,17 @@ app.post(
     await review.save();
     await cafe.save();
     res.redirect(`/coffeeshops/${cafe._id}`);
+  })
+);
+
+//Delete review route
+app.delete(
+  "/coffeeshops/:id/reviews/:reviewId",
+  catchAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Coffeeshop.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/coffeeshops/${id}`);
   })
 );
 
