@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
-const { coffeeshopSchema } = require("./schemas");
+const { coffeeshopSchema, reviewSchema } = require("./schemas");
 const catchAsync = require("./utilities/catchAsync");
 const ExpressError = require("./utilities/ExpressError");
 const methodOverride = require("method-override");
@@ -30,6 +30,16 @@ app.use(methodOverride("_method"));
 
 const validateCafe = (req, res, next) => {
   const { error } = coffeeshopSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+const validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(msg, 400);
@@ -102,8 +112,11 @@ app.delete(
   })
 );
 
+//Add review route
+
 app.post(
   "/coffeeshops/:id/reviews",
+  validateReview,
   catchAsync(async (req, res) => {
     const cafe = await Coffeeshop.findById(req.params.id);
     const review = new Review(req.body.review);
