@@ -31,7 +31,12 @@
 </div>
 <div class="bg-light rounded=3 shadow-sm p-5 mb-5">
   <h5 class="mb-4">Leave Comment</h5>
-  <form action="/coffeeshops/<%= cafe._id %>/reviews" method="post">
+  <form
+    action="/coffeeshops/<%= cafe._id %>/reviews"
+    method="post"
+    class="validated-form"
+    novalidate
+  >
     <div class="mb-3">
       <label for="rating" class="form-label">Your rating:</label>
       <input
@@ -52,7 +57,9 @@
         name="review[body]"
         cols="12"
         rows="4"
+        required
       ></textarea>
+      <div class="invalid-feedback">You can't leave the review empty</div>
     </div>
     <div class="mb-3">
       <button class="btn btn-primary">Submit Comment</button>
