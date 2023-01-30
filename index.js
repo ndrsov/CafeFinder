@@ -9,6 +9,8 @@ const methodOverride = require("method-override");
 const Coffeeshop = require("./models/coffeeshop");
 const Review = require("./models/review");
 
+const coffeeshops = require("./routes/coffeeshops");
+
 mongoose
   .connect("mongodb://localhost:27017/cafe-finder")
   .then(() => {
@@ -28,16 +30,6 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-const validateCafe = (req, res, next) => {
-  const { error } = coffeeshopSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
-
 const validateReview = (req, res, next) => {
   const { error } = reviewSchema.validate(req.body);
   if (error) {
@@ -48,69 +40,11 @@ const validateReview = (req, res, next) => {
   }
 };
 
+app.use("/coffeeshops", coffeeshops);
+
 app.get("/", (req, res) => {
   res.render("home");
 });
-
-app.get(
-  "/coffeeshops",
-  catchAsync(async (req, res, next) => {
-    const cafes = await Coffeeshop.find({});
-    res.render("coffeeshops/index", { cafes });
-  })
-);
-
-app.get("/coffeeshops/new", (req, res) => {
-  res.render("coffeeshops/new");
-});
-
-app.post(
-  "/coffeeshops",
-  validateCafe,
-  catchAsync(async (req, res, next) => {
-    // if (!req.body.cafe) throw new ExpressError("Invalid coffeeshop data", 400);
-    const cafe = new Coffeeshop(req.body.cafe);
-    await cafe.save();
-    res.redirect(`/coffeeshops/${cafe._id}`);
-  })
-);
-
-app.get(
-  "/coffeeshops/:id",
-  catchAsync(async (req, res) => {
-    const cafe = await Coffeeshop.findById(req.params.id).populate("reviews");
-    res.render("coffeeshops/show", { cafe });
-  })
-);
-
-app.get(
-  "/coffeeshops/:id/edit",
-  catchAsync(async (req, res) => {
-    const cafe = await Coffeeshop.findById(req.params.id);
-    res.render("coffeeshops/edit", { cafe });
-  })
-);
-
-app.put(
-  "/coffeeshops/:id",
-  validateCafe,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const cafe = await Coffeeshop.findByIdAndUpdate(id, {
-      ...req.body.cafe,
-    });
-    res.redirect(`/coffeeshops/${cafe._id}`);
-  })
-);
-
-app.delete(
-  "/coffeeshops/:id",
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const cafe = await Coffeeshop.findByIdAndDelete(id);
-    res.redirect("/coffeeshops");
-  })
-);
 
 //Add review route
 app.post(
