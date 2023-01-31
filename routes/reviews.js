@@ -27,6 +27,7 @@ router.post(
     cafe.reviews.push(review);
     await review.save();
     await cafe.save();
+    req.flash("success", "New comment added");
     res.redirect(`/coffeeshops/${cafe._id}`);
   })
 );
@@ -37,6 +38,7 @@ router.delete(
     const { id, reviewId } = req.params;
     await Coffeeshop.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
+    req.flash("success", "Comment successfully deleted");
     res.redirect(`/coffeeshops/${id}`);
   })
 );

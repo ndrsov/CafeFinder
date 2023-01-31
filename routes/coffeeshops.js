@@ -32,9 +32,9 @@ router.post(
   "/",
   validateCafe,
   catchAsync(async (req, res, next) => {
-    // if (!req.body.cafe) throw new ExpressError("Invalid coffeeshop data", 400);
     const cafe = new Coffeeshop(req.body.cafe);
     await cafe.save();
+    req.flash("success", "Succesfully made a new café");
     res.redirect(`/coffeeshops/${cafe._id}`);
   })
 );
@@ -63,6 +63,7 @@ router.put(
     const cafe = await Coffeeshop.findByIdAndUpdate(id, {
       ...req.body.cafe,
     });
+    req.flash("success", "Succesfully updated café");
     res.redirect(`/coffeeshops/${cafe._id}`);
   })
 );
@@ -72,6 +73,7 @@ router.delete(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const cafe = await Coffeeshop.findByIdAndDelete(id);
+    req.flash("success", "Succesfully deleted café");
     res.redirect("/coffeeshops");
   })
 );
