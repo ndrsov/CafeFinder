@@ -43,6 +43,10 @@ router.get(
   "/:id",
   catchAsync(async (req, res) => {
     const cafe = await Coffeeshop.findById(req.params.id).populate("reviews");
+    if (!cafe) {
+      req.flash("error", "Cannot find that specific café");
+      return res.redirect("/coffeeshops");
+    }
     res.render("coffeeshops/show", { cafe });
   })
 );
@@ -51,6 +55,10 @@ router.get(
   "/:id/edit",
   catchAsync(async (req, res) => {
     const cafe = await Coffeeshop.findById(req.params.id);
+    if (!cafe) {
+      req.flash("error", "Cannot find that specific café");
+      return res.redirect("/coffeeshops");
+    }
     res.render("coffeeshops/edit", { cafe });
   })
 );
