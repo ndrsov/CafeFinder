@@ -11,8 +11,8 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 
 // Routes
-const coffeeshops = require("./routes/coffeeshops");
-const reviews = require("./routes/reviews");
+const coffeeshopsRoutes = require("./routes/coffeeshops");
+const reviewsRoutes = require("./routes/reviews");
 
 mongoose
   .connect("mongodb://localhost:27017/cafe-finder")
@@ -60,8 +60,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/coffeeshops", coffeeshops);
-app.use("/coffeeshops/:id/reviews", reviews);
+app.use("/coffeeshops", coffeeshopsRoutes);
+app.use("/coffeeshops/:id/reviews", reviewsRoutes);
 
 app.get("/", (req, res) => {
   res.render("home");
