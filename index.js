@@ -11,6 +11,7 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 
 // Routes
+const userRoutes = require("./routes/users");
 const coffeeshopsRoutes = require("./routes/coffeeshops");
 const reviewsRoutes = require("./routes/reviews");
 
@@ -60,6 +61,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/", userRoutes);
 app.use("/coffeeshops", coffeeshopsRoutes);
 app.use("/coffeeshops/:id/reviews", reviewsRoutes);
 
