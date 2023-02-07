@@ -1,0 +1,72 @@
+<% layout("layouts/boilerplate") %>
+<div class="row d-flex justify-content-center align-items-center h-100">
+  <div class="col-6">
+    <h1 class="mb-4 text-center">Create A New Account</h1>
+    <form action="/register" method="post" class="validated-form" novalidate>
+      <div class="mb-3">
+        <label class="form-label" for="username">Username</label>
+        <input
+          class="form-control"
+          type="text"
+          id="username"
+          name="username"
+          required
+        />
+        <div class="invalid-feedback">Please provide a valid username</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="email">Email address</label>
+        <input
+          class="form-control"
+          type="email"
+          id="email"
+          name="email"
+          required
+        />
+        <div class="invalid-feedback">Please provide a valid email</div>
+      </div>
+      <div class="mb-4">
+        <label class="form-label" for="password">Password</label>
+        <input
+          class="form-control"
+          type="password"
+          id="password"
+          name="password"
+          required
+        />
+        <div class="invalid-feedback">Please provide a valid password</div>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">
+        Sign up
+      </button>
+      <!-- <div class="form-floating mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Email address"
+          />
+          <label for="email">Email address</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Username"
+          />
+          <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+          />
+          <label for="password">Password</label>
+        </div>
+ -->
+    </form>
+  </div>
+</div>
