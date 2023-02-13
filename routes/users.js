@@ -40,4 +40,14 @@ router.post(
   }
 );
 
+router.post("/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    req.flash("success", "You signed out of your account, Goodbye!");
+    res.redirect("/coffeeshops");
+  });
+});
+
 module.exports = router;
