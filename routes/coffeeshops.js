@@ -5,6 +5,7 @@ const { coffeeshopSchema } = require("../schemas");
 const catchAsync = require("../utilities/catchAsync");
 const ExpressError = require("../utilities/ExpressError");
 const Coffeeshop = require("../models/coffeeshop");
+const { isLoggedIn } = require("../middleware");
 
 const validateCafe = (req, res, next) => {
   const { error } = coffeeshopSchema.validate(req.body);
@@ -24,12 +25,13 @@ router.get(
   })
 );
 
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
   res.render("coffeeshops/new");
 });
 
 router.post(
   "/",
+  isLoggedIn,
   validateCafe,
   catchAsync(async (req, res, next) => {
     const cafe = new Coffeeshop(req.body.cafe);
@@ -53,6 +55,7 @@ router.get(
 
 router.get(
   "/:id/edit",
+  isLoggedIn,
   catchAsync(async (req, res) => {
     const cafe = await Coffeeshop.findById(req.params.id);
     if (!cafe) {
@@ -65,6 +68,7 @@ router.get(
 
 router.put(
   "/:id",
+  isLoggedIn,
   validateCafe,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -78,6 +82,7 @@ router.put(
 
 router.delete(
   "/:id",
+  isLoggedIn,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const cafe = await Coffeeshop.findByIdAndDelete(id);
