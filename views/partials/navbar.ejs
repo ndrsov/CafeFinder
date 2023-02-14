@@ -19,11 +19,18 @@
         <a class="nav-link" href="/coffeeshops/new">New Café</a>
       </div>
       <div class="navbar-nav ms-auto">
+        <% if (!currentUser) { %>
+
         <a href="/login" class="nav-link">Login</a>
         <a href="/register" class="nav-link">Register</a>
+        <% } else {%>
+        <span class="navbar-text me-3"
+          >Hello, <%= currentUser.username %>!</span
+        >
         <form action="/logout" method="post">
           <button type="submit" class="btn btn-secondary">Logout</button>
         </form>
+        <% } %>
       </div>
     </div>
   </div>
