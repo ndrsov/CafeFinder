@@ -35,6 +35,7 @@ router.post(
   validateCafe,
   catchAsync(async (req, res, next) => {
     const cafe = new Coffeeshop(req.body.cafe);
+    cafe.author = req.user._id;
     await cafe.save();
     req.flash("success", "Succesfully made a new café");
     res.redirect(`/coffeeshops/${cafe._id}`);
