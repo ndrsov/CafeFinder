@@ -44,7 +44,9 @@ router.post(
 router.get(
   "/:id",
   catchAsync(async (req, res) => {
-    const cafe = await Coffeeshop.findById(req.params.id).populate("reviews");
+    const cafe = await Coffeeshop.findById(req.params.id)
+      .populate("reviews")
+      .populate("author");
     if (!cafe) {
       req.flash("error", "Cannot find that specific café");
       return res.redirect("/coffeeshops");

@@ -11,6 +11,7 @@
       <h1><%=cafe.title %></h1>
       <p><%= cafe.description %></p>
       <p><strong><%=cafe.location %></strong></p>
+      <p><small>Submitted By <%= cafe.author.username %></small></p>
       <p class="text-muted">
         Average coffee price: <em>$<%= cafe.avgprice %>/cup</em>
       </p>
