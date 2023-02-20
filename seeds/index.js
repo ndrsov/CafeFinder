@@ -21,6 +21,7 @@ const seedDB = async () => {
     const random1000 = Math.floor(Math.random() * 1000);
     const avgprice = Math.floor(Math.random() * 20) + 10;
     const cafe = new Coffeeshop({
+      author: "63ebe81836385b27830ef511",
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
       image: "https://source.unsplash.com/collection/2557534",
