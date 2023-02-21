@@ -15,18 +15,23 @@
       <p class="text-muted">
         Average coffee price: <em>$<%= cafe.avgprice %>/cup</em>
       </p>
-      <a
-        class="btn btn-outline-warning d-inline"
-        href="/coffeeshops/<%=cafe._id %>/edit"
-        >Edit</a
-      >
-      <form
-        class="d-inline"
-        action="/coffeeshops/<%= cafe._id %>?_method=DELETE"
-        method="post"
-      >
-        <button class="btn btn-outline-danger">Delete</button>
-      </form>
+      <% if (currentUser && cafe.author.equals(currentUser._id)) { %>
+
+      <div class="author-buttons">
+        <a
+          class="btn btn-outline-warning d-inline"
+          href="/coffeeshops/<%=cafe._id %>/edit"
+          >Edit</a
+        >
+        <form
+          class="d-inline"
+          action="/coffeeshops/<%= cafe._id %>?_method=DELETE"
+          method="post"
+        >
+          <button class="btn btn-outline-danger">Delete</button>
+        </form>
+      </div>
+      <% } %>
     </div>
   </div>
 </div>
