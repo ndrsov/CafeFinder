@@ -17,6 +17,16 @@ const validateCafe = (req, res, next) => {
   }
 };
 
+const isAuthor = async (req, res, next) => {
+  const { id } = req.params;
+  const cafe = await Coffeeshop.findById(id);
+  if (!cafe.author.equals(req.user._id)) {
+    req.flash("error", "You do not have permission to do that!");
+    return res.redirect(`/coffeeshops/${id}`);
+  }
+  next();
+};
+
 router.get(
   "/",
   catchAsync(async (req, res, next) => {
@@ -59,6 +69,7 @@ router.get(
 router.get(
   "/:id/edit",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res) => {
     const cafe = await Coffeeshop.findById(req.params.id);
     if (!cafe) {
@@ -72,6 +83,7 @@ router.get(
 router.put(
   "/:id",
   isLoggedIn,
+  isAuthor,
   validateCafe,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -86,6 +98,7 @@ router.put(
 router.delete(
   "/:id",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const cafe = await Coffeeshop.findByIdAndDelete(id);
