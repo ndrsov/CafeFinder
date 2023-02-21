@@ -1,31 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { coffeeshopSchema } = require("../schemas");
 const catchAsync = require("../utilities/catchAsync");
-const ExpressError = require("../utilities/ExpressError");
 const Coffeeshop = require("../models/coffeeshop");
-const { isLoggedIn } = require("../middleware");
-
-const validateCafe = (req, res, next) => {
-  const { error } = coffeeshopSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
-
-const isAuthor = async (req, res, next) => {
-  const { id } = req.params;
-  const cafe = await Coffeeshop.findById(id);
-  if (!cafe.author.equals(req.user._id)) {
-    req.flash("error", "You do not have permission to do that!");
-    return res.redirect(`/coffeeshops/${id}`);
-  }
-  next();
-};
+const { isLoggedIn, isAuthor, validateCafe } = require("../middleware");
 
 router.get(
   "/",
