@@ -1,4 +1,4 @@
-const { coffeeshopSchema } = require("./schemas");
+const { coffeeshopSchema, reviewSchema } = require("./schemas");
 const ExpressError = require("./utilities/ExpressError");
 const Coffeeshop = require("./models/coffeeshop");
 
@@ -27,4 +27,14 @@ module.exports.isAuthor = async (req, res, next) => {
     return res.redirect(`/coffeeshops/${id}`);
   }
   next();
+};
+
+module.exports.validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
 };
