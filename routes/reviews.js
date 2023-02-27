@@ -14,6 +14,7 @@ router.post(
   catchAsync(async (req, res) => {
     const cafe = await Coffeeshop.findById(req.params.id);
     const review = new Review(req.body.review);
+    review.author = req.user._id;
     cafe.reviews.push(review);
     await review.save();
     await cafe.save();
