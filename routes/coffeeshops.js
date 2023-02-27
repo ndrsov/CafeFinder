@@ -34,7 +34,7 @@ router.get(
   "/:id",
   catchAsync(async (req, res) => {
     const cafe = await Coffeeshop.findById(req.params.id)
-      .populate("reviews")
+      .populate({ path: "reviews", populate: { path: "author" } })
       .populate("author");
     if (!cafe) {
       req.flash("error", "Cannot find that specific café");
