@@ -40,8 +40,10 @@
   <% for(let review of cafe.reviews){ %>
   <div class="card mb-3">
     <div class="card-body">
-      <h5 class="card-title">User says:</h5>
-      <p class="text-center text-muted"><%= review.rating %>/5 stars</p>
+      <h5 class="card-title"><%= review.rating %>/5 stars</h5>
+      <h6 class="card-subtitle mb-2 text-muted">
+        <%= review.author.username %> says:
+      </h6>
       <p class="card-text"><%= review.body %></p>
       <form
         action="/coffeeshops/<%= cafe._id %>/reviews/<%= review._id %>?_method=DELETE"
