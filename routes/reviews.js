@@ -2,13 +2,14 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 
 const catchAsync = require("../utilities/catchAsync");
-const { validateReview } = require("../middleware");
+const { validateReview, isLoggedIn } = require("../middleware");
 
 const Coffeeshop = require("../models/coffeeshop");
 const Review = require("../models/review");
 
 router.post(
   "/",
+  isLoggedIn,
   validateReview,
   catchAsync(async (req, res) => {
     const cafe = await Coffeeshop.findById(req.params.id);
