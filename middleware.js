@@ -1,6 +1,7 @@
 const { coffeeshopSchema, reviewSchema } = require("./schemas");
 const ExpressError = require("./utilities/ExpressError");
 const Coffeeshop = require("./models/coffeeshop");
+const Review = require("./models/review");
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
