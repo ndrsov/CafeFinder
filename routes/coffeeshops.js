@@ -4,7 +4,6 @@ const router = express.Router();
 const coffeeshops = require("../controllers/coffeeshops");
 
 const catchAsync = require("../utilities/catchAsync");
-const Coffeeshop = require("../models/coffeeshop");
 const { isLoggedIn, isAuthor, validateCafe } = require("../middleware");
 
 router.get("/", catchAsync(coffeeshops.index));
