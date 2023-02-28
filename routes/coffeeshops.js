@@ -1,61 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
+const coffeeshops = require("../controllers/coffeeshops");
+
 const catchAsync = require("../utilities/catchAsync");
 const Coffeeshop = require("../models/coffeeshop");
 const { isLoggedIn, isAuthor, validateCafe } = require("../middleware");
 
-router.get(
-  "/",
-  catchAsync(async (req, res, next) => {
-    const cafes = await Coffeeshop.find({});
-    res.render("coffeeshops/index", { cafes });
-  })
-);
+router.get("/", catchAsync(coffeeshops.index));
 
-router.get("/new", isLoggedIn, (req, res) => {
-  res.render("coffeeshops/new");
-});
+router.get("/new", isLoggedIn, coffeeshops.renderNewForm);
 
-router.post(
-  "/",
-  isLoggedIn,
-  validateCafe,
-  catchAsync(async (req, res, next) => {
-    const cafe = new Coffeeshop(req.body.cafe);
-    cafe.author = req.user._id;
-    await cafe.save();
-    req.flash("success", "Succesfully made a new café");
-    res.redirect(`/coffeeshops/${cafe._id}`);
-  })
-);
+router.post("/", isLoggedIn, validateCafe, catchAsync(coffeeshops.createCafe));
 
-router.get(
-  "/:id",
-  catchAsync(async (req, res) => {
-    const cafe = await Coffeeshop.findById(req.params.id)
-      .populate({ path: "reviews", populate: { path: "author" } })
-      .populate("author");
-    if (!cafe) {
-      req.flash("error", "Cannot find that specific café");
-      return res.redirect("/coffeeshops");
-    }
-    res.render("coffeeshops/show", { cafe });
-  })
-);
+router.get("/:id", catchAsync(coffeeshops.showCafe));
 
 router.get(
   "/:id/edit",
   isLoggedIn,
   isAuthor,
-  catchAsync(async (req, res) => {
-    const cafe = await Coffeeshop.findById(req.params.id);
-    if (!cafe) {
-      req.flash("error", "Cannot find that specific café");
-      return res.redirect("/coffeeshops");
-    }
-    res.render("coffeeshops/edit", { cafe });
-  })
+  catchAsync(coffeeshops.renderEditForm)
 );
 
 router.put(
@@ -63,26 +27,9 @@ router.put(
   isLoggedIn,
   isAuthor,
   validateCafe,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const cafe = await Coffeeshop.findByIdAndUpdate(id, {
-      ...req.body.cafe,
-    });
-    req.flash("success", "Succesfully updated café");
-    res.redirect(`/coffeeshops/${cafe._id}`);
-  })
+  catchAsync(coffeeshops.updateCafe)
 );
 
-router.delete(
-  "/:id",
-  isLoggedIn,
-  isAuthor,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const cafe = await Coffeeshop.findByIdAndDelete(id);
-    req.flash("success", "Succesfully deleted café");
-    res.redirect("/coffeeshops");
-  })
-);
+router.delete("/:id", isLoggedIn, isAuthor, catchAsync(coffeeshops.deleteCafe));
 
 module.exports = router;
