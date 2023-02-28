@@ -1,35 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const catchAsync = require("../utilities/catchAsync");
-const User = require("../models/user");
 const passport = require("passport");
 
-router.get("/register", (req, res) => {
-  res.render("auth/register");
-});
+const users = require("../controllers/users");
 
-router.post(
-  "/register",
-  catchAsync(async (req, res) => {
-    try {
-      const { email, username, password } = req.body;
-      const user = new User({ email, username });
-      const registeredUser = await User.register(user, password);
-      req.login(registeredUser, (err) => {
-        if (err) return next(err);
-        req.flash("success", "Thanks for registering, Welcome to CafeFinder!");
-        res.redirect("/coffeeshops");
-      });
-    } catch (err) {
-      req.flash("error", err.message);
-      res.redirect("/register");
-    }
-  })
-);
+router.get("/register", users.renderRegisterForm);
 
-router.get("/login", (req, res) => {
-  res.render("auth/login");
-});
+router.post("/register", catchAsync(users.register));
+
+router.get("/login", users.renderLoginForm);
 
 router.post(
   "/login",
@@ -37,20 +17,9 @@ router.post(
     failureFlash: true,
     failureRedirect: "/login",
   }),
-  (req, res) => {
-    req.flash("success", "Welcome Back!");
-    res.redirect("/coffeeshops");
-  }
+  users.login
 );
 
-router.post("/logout", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    req.flash("success", "You signed out of your account, Goodbye!");
-    res.redirect("/coffeeshops");
-  });
-});
+router.post("/logout", users.logout);
 
 module.exports = router;
