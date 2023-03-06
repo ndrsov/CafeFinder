@@ -1,42 +1,48 @@
-const express = require("express");
-const path = require("path");
-const mongoose = require("mongoose");
-const ejsMate = require("ejs-mate");
-const session = require("express-session");
-const flash = require("connect-flash");
-const ExpressError = require("./utilities/ExpressError");
-const methodOverride = require("method-override");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const User = require("./models/user");
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
+console.log(process.env.SECRET);
+
+const express = require('express');
+const path = require('path');
+const mongoose = require('mongoose');
+const ejsMate = require('ejs-mate');
+const session = require('express-session');
+const flash = require('connect-flash');
+const ExpressError = require('./utilities/ExpressError');
+const methodOverride = require('method-override');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
 // Routes
-const userRoutes = require("./routes/users");
-const coffeeshopsRoutes = require("./routes/coffeeshops");
-const reviewsRoutes = require("./routes/reviews");
+const userRoutes = require('./routes/users');
+const coffeeshopsRoutes = require('./routes/coffeeshops');
+const reviewsRoutes = require('./routes/reviews');
 
 mongoose
-  .connect("mongodb://localhost:27017/cafe-finder")
+  .connect('mongodb://localhost:27017/cafe-finder')
   .then(() => {
-    console.log("Connection with Mongo open");
+    console.log('Connection with Mongo open');
   })
   .catch((err) => {
-    console.log("There was an error with Mongo");
+    console.log('There was an error with Mongo');
     console.log(err);
   });
 
 const app = express();
 
-app.engine("ejs", ejsMate);
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.engine('ejs', ejsMate);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const sessionConfig = {
-  secret: "thisshouldbeabettersecret",
+  secret: 'thisshouldbeabettersecret',
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -57,29 +63,29 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
   next();
 });
 
-app.use("/", userRoutes);
-app.use("/coffeeshops", coffeeshopsRoutes);
-app.use("/coffeeshops/:id/reviews", reviewsRoutes);
+app.use('/', userRoutes);
+app.use('/coffeeshops', coffeeshopsRoutes);
+app.use('/coffeeshops/:id/reviews', reviewsRoutes);
 
-app.get("/", (req, res) => {
-  res.render("home");
+app.get('/', (req, res) => {
+  res.render('home');
 });
 
-app.all("*", (req, res, next) => {
-  next(new ExpressError("Page Not Found", 404));
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page Not Found', 404));
 });
 
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
-  if (!err.message) err.message = "Oh no, Something went wrong!";
-  res.status(statusCode).render("error", { err });
+  if (!err.message) err.message = 'Oh no, Something went wrong!';
+  res.status(statusCode).render('error', { err });
 });
 
 app.listen(3000, () => {
-  console.log("Serving on port 3000");
+  console.log('Serving on port 3000');
 });
