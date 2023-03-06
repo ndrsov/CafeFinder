@@ -2,7 +2,13 @@
 <div class="row">
   <h1 class="text-center">Add a new café</h1>
   <div class="col-6 offset-3">
-    <form action="/coffeeshops" method="post" novalidate class="validated-form">
+    <form
+      action="/coffeeshops"
+      method="post"
+      novalidate
+      class="validated-form"
+      enctype="multipart/form-data"
+    >
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <input
@@ -28,14 +34,15 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="image" class="form-label">Add an image URL</label>
+        <input type="file" name="image" multiple />
+        <!-- <label for="image" class="form-label">Add an image URL</label>
         <input
           type="text"
           class="form-control"
           id="image"
           name="cafe[image]"
           required
-        />
+        /> -->
         <div class="invalid-feedback">Please add a photo of this café</div>
       </div>
       <div class="mb-3">

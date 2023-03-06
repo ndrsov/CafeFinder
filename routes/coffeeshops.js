@@ -1,26 +1,33 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const coffeeshops = require("../controllers/coffeeshops");
+const coffeeshops = require('../controllers/coffeeshops');
 
-const catchAsync = require("../utilities/catchAsync");
-const { isLoggedIn, isAuthor, validateCafe } = require("../middleware");
+const catchAsync = require('../utilities/catchAsync');
+const { isLoggedIn, isAuthor, validateCafe } = require('../middleware');
+
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 router
-  .route("/")
+  .route('/')
   .get(catchAsync(coffeeshops.index))
-  .post(isLoggedIn, validateCafe, catchAsync(coffeeshops.createCafe));
+  .post(upload.array('image'), (req, res) => {
+    console.log(req.body, req.files);
+    res.send('It worked');
+  });
+// .post(isLoggedIn, validateCafe, catchAsync(coffeeshops.createCafe));
 
-router.get("/new", isLoggedIn, coffeeshops.renderNewForm);
+router.get('/new', isLoggedIn, coffeeshops.renderNewForm);
 
 router
-  .route("/:id")
+  .route('/:id')
   .get(catchAsync(coffeeshops.showCafe))
   .put(isLoggedIn, isAuthor, validateCafe, catchAsync(coffeeshops.updateCafe))
   .delete(isLoggedIn, isAuthor, catchAsync(coffeeshops.deleteCafe));
 
 router.get(
-  "/:id/edit",
+  '/:id/edit',
   isLoggedIn,
   isAuthor,
   catchAsync(coffeeshops.renderEditForm)
