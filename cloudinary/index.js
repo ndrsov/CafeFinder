@@ -9,8 +9,10 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  folder: 'CafeFinder',
-  allowedFormats: ['jpeg', 'png', 'jpg'],
+  params: {
+    folder: 'CafeFinder',
+    allowedFormats: ['jpeg', 'png', 'jpg'],
+  },
 });
 
 module.exports = {
