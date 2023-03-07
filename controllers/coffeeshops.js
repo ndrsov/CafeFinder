@@ -43,6 +43,9 @@ module.exports.updateCafe = async (req, res) => {
   const cafe = await Coffeeshop.findByIdAndUpdate(id, {
     ...req.body.cafe,
   });
+  const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
+  cafe.images.push(...imgs);
+  await cafe.save();
   req.flash('success', 'Succesfully updated café');
   res.redirect(`/coffeeshops/${cafe._id}`);
 };

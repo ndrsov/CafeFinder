@@ -25,7 +25,13 @@ router.get('/new', isLoggedIn, coffeeshops.renderNewForm);
 router
   .route('/:id')
   .get(catchAsync(coffeeshops.showCafe))
-  .put(isLoggedIn, isAuthor, validateCafe, catchAsync(coffeeshops.updateCafe))
+  .put(
+    isLoggedIn,
+    isAuthor,
+    upload.array('image'),
+    validateCafe,
+    catchAsync(coffeeshops.updateCafe)
+  )
   .delete(isLoggedIn, isAuthor, catchAsync(coffeeshops.deleteCafe));
 
 router.get(

@@ -7,6 +7,7 @@
       method="post"
       novalidate
       class="validated-form"
+      enctype="multipart/form-data"
     >
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
@@ -33,16 +34,8 @@
         <div class="invalid-feedback">You can't leave this space blank</div>
       </div>
       <div class="mb-3">
-        <label for="image" class="form-label">Add an image URL</label>
-        <input
-          type="text"
-          class="form-control"
-          id="image"
-          name="cafe[image]"
-          value="<%= cafe.image %>"
-          required
-        />
-        <div class="invalid-feedback">You can't leave this space blank</div>
+        <label for="image" class="form-label">Add more images</label>
+        <input type="file" name="image" id="image" multiple />
       </div>
       <div class="mb-3">
         <label for="avgprice" class="form-label"
