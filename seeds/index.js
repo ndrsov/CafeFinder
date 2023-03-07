@@ -19,7 +19,7 @@ const seedDB = async () => {
   await Coffeeshop.deleteMany({});
   for (let i = 0; i < 50; i++) {
     const random1000 = Math.floor(Math.random() * 1000);
-    const avgprice = Math.floor(Math.random() * 20) + 10;
+    const avgprice = Math.floor(Math.random() * 20) + 1;
     const cafe = new Coffeeshop({
       author: '63ebe81836385b27830ef511',
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
@@ -29,12 +29,8 @@ const seedDB = async () => {
       avgprice,
       images: [
         {
-          url: 'https://res.cloudinary.com/dd8osqetv/image/upload/v1678141840/CafeFinder/m8x5nislwbn0puxh0efw.jpg',
-          filename: 'CafeFinder/m8x5nislwbn0puxh0efw',
-        },
-        {
-          url: 'https://res.cloudinary.com/dd8osqetv/image/upload/v1678141841/CafeFinder/xvhvfuorkukvndu6irkh.jpg',
-          filename: 'CafeFinder/xvhvfuorkukvndu6irkh',
+          url: 'https://res.cloudinary.com/dd8osqetv/image/upload/v1678216829/CafeFinder/oepenrg2x4mr1cf8danp.jpg',
+          filename: 'CafeFinder/oepenrg2x4mr1cf8danp',
         },
       ],
     });
