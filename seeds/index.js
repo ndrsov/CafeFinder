@@ -29,7 +29,7 @@ const seedDB = async () => {
       avgprice,
       images: [
         {
-          url: 'https://res.cloudinary.com/dd8osqetv/image/upload/v1678216829/CafeFinder/oepenrg2x4mr1cf8danp.jpg',
+          url: 'https://res.cloudinary.com/dd8osqetv/image/upload/v1678218378/CafeFinder/nnt4sibibqmzbaxk20sz.jpg',
           filename: 'CafeFinder/oepenrg2x4mr1cf8danp',
         },
       ],
