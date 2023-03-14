@@ -153,7 +153,7 @@
 
 <script>
   const mapToken = '<%- process.env.MAPBOX_TOKEN %>';
-  const cafeLocation = <%- JSON.stringify(cafe.geometry.coordinates)%>;
+  const cafe = <%- JSON.stringify(cafe)%>;
 </script>
 
 <script src="/js/showPageMap.js"></script>
