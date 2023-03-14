@@ -14,6 +14,17 @@ ImageSchema.virtual('thumbnail').get(function () {
 const CoffeeshopSchema = new Schema({
   title: String,
   images: [ImageSchema],
+  geometry: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
   avgprice: Number,
   description: String,
   location: String,
