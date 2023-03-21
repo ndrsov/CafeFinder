@@ -19,33 +19,44 @@ ImageSchema.virtual('preview').get(function () {
   return this.url.replace('/upload', '/upload/h_350');
 });
 
-const CoffeeshopSchema = new Schema({
-  title: String,
-  images: [ImageSchema],
-  geometry: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      required: true,
+const opts = { toJSON: { virtuals: true } };
+
+const CoffeeshopSchema = new Schema(
+  {
+    title: String,
+    images: [ImageSchema],
+    geometry: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
     },
-    coordinates: {
-      type: [Number],
-      required: true,
-    },
-  },
-  avgprice: Number,
-  description: String,
-  location: String,
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-  reviews: [
-    {
+    avgprice: Number,
+    description: String,
+    location: String,
+    author: {
       type: Schema.Types.ObjectId,
-      ref: 'Review',
+      ref: 'User',
     },
-  ],
+    reviews: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Review',
+      },
+    ],
+  },
+  opts
+);
+
+CoffeeshopSchema.virtual('properties.popUpMarkup').get(function () {
+  return `<strong><a href="/coffeeshops/${
+    this._id
+  }">${this.title}</a></strong><p>${this.description.substring(0, 20)}...</p>`;
 });
 
 CoffeeshopSchema.post('findOneAndDelete', async function (doc) {
