@@ -1,12 +1,21 @@
 /* Home page styles */
 :root {
-  --black: #000000;
   --oxford-blue: #14213d;
   --orange-web: #fca311;
   --platinum: #e5e5e5;
-  --white: #ffffff;
 }
 
+#main-btn {
+  background-color: var(--orange-web);
+}
+
+.navbar-brand > span {
+  color: var(--oxford-blue);
+}
+
+#main-title {
+  color: var(--oxford-blue);
+}
 /* Custom Mapbox styles  */
 #cafe-title {
   font-weight: bold;
