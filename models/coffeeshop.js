@@ -16,7 +16,7 @@ ImageSchema.virtual('hero').get(function () {
 });
 
 ImageSchema.virtual('preview').get(function () {
-  return this.url.replace('/upload', '/upload/h_350');
+  return this.url.replace('/upload', '/upload/c_fill,h_300,w_500');
 });
 
 const opts = { toJSON: { virtuals: true } };
