@@ -2,6 +2,7 @@
 :root {
   --oxford-blue: #14213d;
   --orange-web: #fca311;
+  --orange-dark: #e4920d;
   --platinum: #e5e5e5;
 }
 
@@ -44,4 +45,15 @@
   position: relative;
   height: inherit;
   width: inherit;
+}
+
+/* Custom button styles  */
+.btn-warning {
+  background-color: var(--orange-web);
+  border-color: var(--orange-dark);
+}
+
+h2,
+h5 {
+  color: var(--oxford-blue);
 }
