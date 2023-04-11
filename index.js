@@ -21,8 +21,12 @@ const userRoutes = require('./routes/users');
 const coffeeshopsRoutes = require('./routes/coffeeshops');
 const reviewsRoutes = require('./routes/reviews');
 
+const MongoStore = require('connect-mongo');
+
+const dbUrl = 'mongodb://localhost:27017/cafe-finder';
+
 mongoose
-  .connect('mongodb://localhost:27017/cafe-finder')
+  .connect(dbUrl)
   .then(() => {
     console.log('Connection with Mongo open');
   })
@@ -42,7 +46,20 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(mongoSanatize());
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: 'thisshouldbeabettersecret',
+  },
+});
+
+store.on('err', function (e) {
+  console.log('Session Store error', e);
+});
+
 const sessionConfig = {
+  store,
   name: 'session',
   secret: 'thisshouldbeabettersecret',
   resave: false,
