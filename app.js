@@ -23,8 +23,7 @@ const reviewsRoutes = require('./routes/reviews');
 
 const MongoStore = require('connect-mongo');
 
-// const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/cafe-finder';
-const dbUrl = 'mongodb://localhost:27017/cafe-finder';
+const dbUrl = process.env.DB_URL;
 
 mongoose
   .connect(dbUrl)
@@ -67,7 +66,7 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    // secure: true,
+    secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
