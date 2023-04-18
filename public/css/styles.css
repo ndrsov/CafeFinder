@@ -57,3 +57,13 @@ h2,
 h5 {
   color: var(--oxford-blue);
 }
+
+.page-link {
+  color: var(--oxford-blue);
+}
+
+.active > .page-link,
+.page-link.active {
+  background-color: var(--orange-web);
+  border-color: var(--orange-web);
+}
