@@ -23,8 +23,10 @@ const reviewsRoutes = require('./routes/reviews');
 
 const MongoStore = require('connect-mongo');
 
-const dbUrl = 'mongodb://localhost:27017/cafe-finder';
-// const dbUrl = process.env.DB_URL;
+//Force local db
+// const dbUrl = 'mongodb://localhost:27017/cafe-finder';
+
+const dbUrl = process.env.DB_URL;
 
 mongoose
   .connect(dbUrl)
