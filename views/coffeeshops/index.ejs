@@ -10,10 +10,6 @@
   >
 </div>
 
-<div class="my-3 d-flex justify-content-center">
-  <%- include('../partials/paginate') %>
-</div>
-
 <% for( let cafe of cafes.docs) { %>
 <div class="card mb-3">
   <div class="row">
@@ -37,6 +33,10 @@
   </div>
 </div>
 <% } %>
+
+<div class="my-3 d-flex justify-content-center">
+  <%- include('../partials/paginate') %>
+</div>
 
 <script>
   const mapToken = '<%- process.env.MAPBOX_TOKEN %>';
