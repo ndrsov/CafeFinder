@@ -6,8 +6,44 @@ const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
 module.exports.index = async (req, res, next) => {
-  const cafes = await Coffeeshop.find({});
-  res.render('coffeeshops/index', { cafes });
+  cafesOnMap = await Coffeeshop.find({});
+  const cafes = await Coffeeshop.paginate(
+    {},
+    {
+      page: req.query.page || 1,
+      limit: 10,
+      sort: '-_id',
+    }
+  );
+  cafes.page = Number(cafes.page);
+  let totalPages = cafes.totalPages;
+  let currentPage = cafes.page;
+  let startPage;
+  let endPage;
+
+  if (totalPages <= 10) {
+    startPage = 1;
+    endPage = totalPages;
+  } else {
+    if (currentPage <= 6) {
+      startPage = 1;
+      endPage = 10;
+    } else if (currentPage + 4 >= totalPages) {
+      startPage = totalPages - 9;
+      endPage = totalPages;
+    } else {
+      startPage = currentPage - 5;
+      endPage = currentPage + 4;
+    }
+  }
+  res.render('coffeeshops/index', {
+    cafes,
+    cafesOnMap,
+    startPage,
+    endPage,
+    currentPage,
+    totalPages,
+  });
 };
 
 module.exports.renderNewForm = (req, res) => {

@@ -1,0 +1,26 @@
+<nav aria-label="Page Navigation">
+  <ul class="pagination">
+    <% if (currentPage -1) { %>
+    <li class="page-item">
+      <a class="page-link" href="/coffeeshops?page=<%= cafes.page - 1 %>"
+        >Previous</a
+      >
+    </li>
+    <% } %> <% if (cafes.totalPages > 1 && cafes.docs.length) { %> <% for( let i
+    = startPage; i <= endPage; i++ ) { %> <% if (i === cafes.page) { %>
+    <li class="page-item active" aria-current="page">
+      <a href="/coffeeshops?page=<%= i %>" class="page-link"> <%= i %></a>
+    </li>
+    <% } else {%>
+    <li class="page-item" aria-current="page">
+      <a href="/coffeeshops?page=<%= i %>" class="page-link"> <%= i %></a>
+    </li>
+    <% } %> <% } %> <% } %> <% if ((currentPage + 1)<= totalPages) { %>
+    <li class="page-tiem">
+      <a href="/coffeeshops?page=<%= cafes.page + 1 %>" class="page-link"
+        >Next</a
+      >
+    </li>
+    <% } %>
+  </ul>
+</nav>
