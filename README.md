@@ -62,5 +62,5 @@ MONGO_STORE_SECRET='<secret>'
 5. Run it locally
 
 ```sh
-npm run
+npm run start
 ```
